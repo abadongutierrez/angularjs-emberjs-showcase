@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <title>My HTML File</title>
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+  <script src="js/controllers.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+ 
+  <p>Welcome to {{'Angular' + '!'}}</p>
+
+  <table border="1">
+    <tr>
+        <td></td>
+        <td>Column 1</td>
+        <td>Column 2</td>
+        <td>Write something and see what happens with the checkbox!</td>
+    </tr>
+    <tr ng-repeat="thing in things">
+        <td><input type="checkbox" ng-disabled="thing.text == undefined || thing.text.trim().length == 0"></input></td>
+        <td>{{thing.name}}</td>
+        <td>{{thing.snippet}}</td>
+        <td><textarea ng-model="thing.text"></textarea><td>
+    </tr>
+  </table>
+ 
+</body>
+</html>
