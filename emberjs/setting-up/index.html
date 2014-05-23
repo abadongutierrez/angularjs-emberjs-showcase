@@ -5,22 +5,21 @@
 <body>
     <script type="text/x-handlebars" data-template-name="application">
         <div class="navbar navbar-default">
-            <div class="navbar-inner">
-                <div class='container'>
-                    <ul class="nav">
-                      <li class="active">
-                        <a class="brand" href="#">Brand Name</a>
-                      </li>
-                      <li><a href="#">Index</a></li>
-                      <li><a href="#/about">About</a></li>
-                      <li><a href="#/credits">Credits</a></li>
-                    </ul>           
-                </div>
+            <div class='container'>
+                {{#link-to "index" class="navbar-brand"}}Brand Name{{/link-to}}
+                <ul class="nav navbar-nav navbar-right">
+                  <!-- Use link-to instead of <a> to use the 'active' class -->
+                  {{#link-to 'index' tagName="li"}}Index{{/link-to}}
+                  {{#link-to 'about' tagName="li"}}About{{/link-to}}
+                  {{#link-to 'credits' tagName="li"}}Credits{{/link-to}}
+                </ul>           
             </div>
-        </div> 
+        </div>
+
         <div class="container">
             {{outlet}}
         </div>
+
         <footer class='container'>
             <hr />
             <p class='pull-left'>&copy; 2013 The Flint &amp; Flame</p>
@@ -31,6 +30,8 @@
     <!-- by default 'index' is rendered into the {{outlet}} -->
     <script type="text/x-handlebars" data-template-name="index">
         <h1>Welcome to The Flint & Flame!</h1>
+        <p>There are {{productsCount}} products</p>
+        <p>Time {{time}}</p>
     </script>
 
     <script type="text/x-handlebars" data-template-name="about">
