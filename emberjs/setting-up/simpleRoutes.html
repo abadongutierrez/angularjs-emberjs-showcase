@@ -1,0 +1,48 @@
+<html>
+<head>
+    <link rel="stylesheet" href="css/bootstrap.min.css" media="screen" />
+</head>
+<body>
+    <script type="text/x-handlebars" data-template-name="application">
+        <h2>{{title}} {{appName}}</h2>
+        <div><a href="#/favorites">Favorites</a></div>
+        <div>{{outlet}}</div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="favorites">
+        <h3>Favorites: {{message}}</h3>
+    </script>
+
+    <script src="js/libs/jquery-1.10.2.js"></script>
+    <script src="js/libs/handlebars-1.1.2.js"></script>
+    <script src="js/libs/ember-1.5.1.js"></script>
+    <script src="js/libs/ember-data.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        var App = Ember.Application.create({
+            LOG_TRANSITIONS: true
+        });
+
+        App.ApplicationRoute = Ember.Route.extend({
+            setupController: function(controller) {
+                // `controller` is the instance of ApplicationController
+                controller.set('title', "Hello world!");
+            }
+        });
+
+        App.ApplicationController = Ember.Controller.extend({
+          appName: 'My First Example'
+        });
+
+        App.Router.map(function() {
+            this.route('favorites');
+        });
+
+        App.FavoritesRoute = Ember.Route.extend({
+            model: function() {
+                return { message: "Hi There!" };
+            }
+        });
+    </script>
+</body>
+</html>
