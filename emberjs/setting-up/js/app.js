@@ -105,6 +105,44 @@ App.ReviewsController = Ember.ArrayController.extend({
     sortAscending: true
 });
 
+App.ReviewView = Ember.View.extend({
+    isExpanded: false,
+    classNameBindings: ['isExpanded', 'readMore'],
+    click: function() {
+        this.toggleProperty('isExpanded');
+    },
+    readMore: function() {
+        return this.get('length') > 8;
+    }.property('length')
+});
+
+App.ProductController = Ember.ObjectController.extend({
+    review: function () {
+        return this.store.createRecord('review', {
+            product: this.get('model')
+        });
+    }.property('model'),
+    isNotReviewed: Ember.computed.alias('review.isNew'),
+    actions: {
+        createReview: function() {
+            console.log(this.get('text'));
+            // create the view
+            this.get('review').set('reviewedAt', new Date());
+            // save the record  
+            var controller = this;
+            this.get('review').save().then(function(review) {
+                // clear out the textare (only when promise gets back)
+                controller.set('text', '');
+                controller.get('model.reviews').addObject(review);
+            });
+        }
+    }
+});
+
+Ember.Handlebars.registerBoundHelper('markdown', function(text) {
+    return text;
+});
+
 var imageSrc = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDAiIGhlaWdodD0iMTQwIj48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjcwIiB5PSI3MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjE0MHgxNDA8L3RleHQ+PC9zdmc+';
 
 App.Product.FIXTURES = [
